@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
                         },
                         {
                             role: 'user',
-                            content: `Create a playlist name and playlist for:\n\n${text}, don't ask further questions, just provide the playlist you think is best`,
+                            content: `Create a playlist name and playlist for:\n\n${text}, don't ask further questions, just provide the playlist you think is best, all I want is the playlist name and list of tracks, not other messages such as 'Playlist Name:' or 'Playlist:' or a message after should be returned`,
                         },
                     ],
                     max_tokens: 150,
@@ -44,8 +44,8 @@ module.exports = async (req, res) => {
             );
 
             // Return the suggested message from OpenAI API
-            const suggestion = response.data.choices[0]?.message?.content?.trim();
-            return res.status(200).json({ suggestion });
+            const playlist = response.data.choices[0]?.message?.content?.trim();
+            return res.status(200).json({ playlist });
 
         } catch (error) {
             console.error('OpenAI API error:', error.response?.data || error.message);

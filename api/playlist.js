@@ -1,9 +1,5 @@
 const axios = require('axios');
 
-// git add .
-// git commit -m 'first'
-// git push
-
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');  
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -29,11 +25,11 @@ module.exports = async (req, res) => {
                     messages: [
                         {
                             role: 'system',
-                            content: "You are an AI assistant that helps users come up with friendly and conversational message suggestions for a social media app for music lovers.",
+                            content: "You are an AI assistant that helps users generate music playlists based on a prompt.",
                         },
                         {
                             role: 'user',
-                            content: `Suggest what to say after this message:\n\n${text}, make it music-related too, as this is for a social media app for music lovers, and just return the message, don't return anything else apart from the message you are suggesting`,
+                            content: `Create a playlist name and playlist for:\n\n${text}, don't ask further questions, just provide the playlist you think is best`,
                         },
                     ],
                     max_tokens: 150,

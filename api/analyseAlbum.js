@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
                             content: `Breakdown and anylyse the album:\n\n${text}`,
                         },
                     ],
-                    max_tokens: 150,
+                    max_tokens: 500,
                     temperature: 0.7,
                 },
                 {

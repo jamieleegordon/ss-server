@@ -29,18 +29,17 @@ module.exports = async (req, res) => {
                     messages: [
                         {
                             role: 'system',
-                            content: "You are an AI assistant that returns analysis, stats and breakdowns on specified music albums",
+                            content: "You are an AI assistant that recommends albums based on user input",
                         },
                         {
                             role: 'user',
-                            content: `Below are AVERAGES for stats of multiple albums listened to by me: recommend 12 albums, 
-                            along with an explanation to why you are recommending that album in json format, just return the json, DO NOT return anything else \n\n 
-                             albums {
+                            content: `Below are AVERAGES for stats of multiple albums listened to by me: recommend 12 albums, along with an explanation to why you are recommending that album in json format, just return the json, DO NOT return anything else \n\n 
+                            albums {
                                 album {
                                         albumName: "", (this is just the album name, so don't include the artist name here too)
                                         explanation: ""
                                 }, 
-                            } \n\n${text} `,
+                            } \n\n${text}`,
                         },
                     ],
                     max_tokens: 500,
@@ -54,24 +53,17 @@ module.exports = async (req, res) => {
                 }
             );
 
-            // Log the raw response from OpenAI for debugging
-            console.log("OpenAI Response:", response.data);
-
-            // Get the recommendations and parse out the raw JSON
+            // Get the raw response from OpenAI
             const recommendations = response.data.choices[0]?.message?.content?.trim();
-            console.log("Raw Recommendations:", recommendations); // Log raw recommendation content
 
-            // Assuming the returned response is already in valid JSON format
-            let recommendationsJson;
+            // Ensure the returned value is a valid JSON
             try {
-                recommendationsJson = JSON.parse(recommendations);
+                const parsedRecommendations = JSON.parse(recommendations);
+                return res.status(200).json({ recommendations: JSON.stringify(parsedRecommendations) });
             } catch (e) {
-                console.error("Failed to parse recommendations:", e);
-                return res.status(500).json({ error: 'Failed to parse response from OpenAI API' });
+                return res.status(500).json({ error: 'Failed to parse recommendations response from OpenAI API' });
             }
-
-            return res.status(200).json(recommendationsJson);
-
+            
         } catch (error) {
             console.error('OpenAI API error:', error.response?.data || error.message);
             return res.status(500).json({ error: 'An error occurred while fetching data from OpenAI' });

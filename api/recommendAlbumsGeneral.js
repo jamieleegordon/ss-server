@@ -29,13 +29,17 @@ module.exports = async (req, res) => {
                         },
                         {
                             role: 'user',
-                            content: `Recommend 12 albums, along with an explanation to why you are recommending that album in json format, just return the json, DO NOT return anything else, only json should be returned \n\n 
-                            albums {
-                                album {
-                                    albumName: "", (this is just the album name, so don't include the artist name here too)
-                                    explanation: ""
-                                }, 
-                            } \n\n here is some stats to base your recommendations from \n ${text}`,
+                            content: `Just return the JSON format, do not include any markdown or code block markers. The JSON should look like this:
+                                {
+                                    "albums": [
+                                        {
+                                            "albumName": "Album Name",
+                                            "explanation": "Explanation of why this album is recommended."
+                                        }
+                                    ]
+                                }
+
+                                Here are some stats to base your recommendations from: ${text}`,
                         },
                     ],
                     max_tokens: 500,

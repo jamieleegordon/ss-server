@@ -54,14 +54,19 @@ module.exports = async (req, res) => {
                 }
             );
 
+            // Log the raw response from OpenAI for debugging
+            console.log("OpenAI Response:", response.data);
+
             // Get the recommendations and parse out the raw JSON
             const recommendations = response.data.choices[0]?.message?.content?.trim();
+            console.log("Raw Recommendations:", recommendations); // Log raw recommendation content
 
             // Assuming the returned response is already in valid JSON format
             let recommendationsJson;
             try {
                 recommendationsJson = JSON.parse(recommendations);
             } catch (e) {
+                console.error("Failed to parse recommendations:", e);
                 return res.status(500).json({ error: 'Failed to parse response from OpenAI API' });
             }
 

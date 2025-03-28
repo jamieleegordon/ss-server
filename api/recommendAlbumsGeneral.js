@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
                                     ]
                                 }
 
-                                Return 12 albums. Here are some stats to base your recommendations from: ${text}`,
+                                Return 6 albums. Here are some stats to base your recommendations from: ${text}`,
                         },
                     ],
                     max_tokens: 500,
